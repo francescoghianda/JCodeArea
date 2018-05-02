@@ -94,6 +94,32 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         return this.theme;
     }
 
+    public String getText()
+    {
+        return codeArea.getText();
+    }
+
+    public void setText(String text)
+    {
+        codeArea.setText(text);
+        updateNumbers();
+    }
+
+    private void updateNumbers()
+    {
+        int l;
+        String str = "";
+        if((l = codeArea.getLineCount()) != lines)
+        {
+            lines = l;
+            for(int i = 0; i < l; i++)
+            {
+                str += " "+String.valueOf(i+1)+"\n";
+            }
+            numArea.setText(str);
+        }
+    }
+
     @Override
     public void addKeyListener(KeyListener kl)
     {
@@ -110,17 +136,7 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
     @Override
     public void keyTyped(KeyEvent e)
     {
-        int l;
-        String str = "";
-        if((l = codeArea.getLineCount()) != lines)
-        {
-            lines = l;
-            for(int i = 0; i < l; i++)
-            {
-                str += " "+String.valueOf(i+1)+"\n";
-            }
-            numArea.setText(str);
-        }
+        updateNumbers();
     }
 
     @Override
