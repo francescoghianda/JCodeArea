@@ -32,10 +32,10 @@ public class CodeAreaScrollBarUI extends BasicScrollBarUI
     protected JButton createDecreaseButton(int orientation)
     {
         JButton button = new JButton();
-        Dimension zeroDim = new Dimension(0,0);
-        button.setPreferredSize(zeroDim);
-        button.setMinimumSize(zeroDim);
-        button.setMaximumSize(zeroDim);
+        Dimension dim = new Dimension(0,0);
+        button.setPreferredSize(dim);
+        button.setMinimumSize(dim);
+        button.setMaximumSize(dim);
         return button;
     }
 
@@ -43,10 +43,10 @@ public class CodeAreaScrollBarUI extends BasicScrollBarUI
     protected JButton createIncreaseButton(int orientation)
     {
         JButton button = new JButton();
-        Dimension zeroDim = new Dimension(0,0);
-        button.setPreferredSize(zeroDim);
-        button.setMinimumSize(zeroDim);
-        button.setMaximumSize(zeroDim);
+        Dimension dim = new Dimension(0,0);
+        button.setPreferredSize(dim);
+        button.setMinimumSize(dim);
+        button.setMaximumSize(dim);
         return button;
     }
 
