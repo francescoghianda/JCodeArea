@@ -2,10 +2,7 @@ package JCodeArea;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
 {
@@ -97,6 +94,12 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         return this.theme;
     }
 
+    @Override
+    public void addKeyListener(KeyListener kl)
+    {
+        //super.addKeyListener(kl);
+        codeArea.addKeyListener(kl);
+    }
 
     @Override
     public void adjustmentValueChanged(AdjustmentEvent e)
