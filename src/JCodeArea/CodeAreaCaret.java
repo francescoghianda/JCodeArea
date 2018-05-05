@@ -1,12 +1,12 @@
 package JCodeArea;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 
 class CodeAreaCaret extends DefaultCaret
 {
     private int width;
-    private Color color;
 
     CodeAreaCaret(int width)
     {
@@ -15,20 +15,22 @@ class CodeAreaCaret extends DefaultCaret
         setBlinkRate(450);
     }
 
-    void setColor(Color color)
-    {
-        this.color = color;
-    }
-
     @Override
     public void paint(Graphics g)
     {
-        if(isVisible())
+        if(getComponent() == null || !isVisible())return;
+
+        g.setColor(getComponent().getCaretColor());
+        Rectangle rect = null;
+        try
         {
-            g.setColor(color);
-            g.fillRect((int)getCenterX()-this.width/2, (int)getY(), this.width, (int)getHeight());
+            rect = (Rectangle) getComponent().modelToView2D(getDot());
         }
-        repaint();
+        catch (BadLocationException e)
+        {
+            e.printStackTrace();
+        }
+        g.fillRect(rect.x, rect.y, this.width, rect.height);
     }
 
 

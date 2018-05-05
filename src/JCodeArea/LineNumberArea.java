@@ -33,7 +33,7 @@ class LineNumberArea extends JTextArea
 
         codeArea.getNumScrollPane().getVerticalScrollBar().setValue(codeArea.getCodeScrollPane().getVerticalScrollBar().getValue());
 
-        repaint();
+        //repaint();
     }
 
     void setTheme(Theme theme)

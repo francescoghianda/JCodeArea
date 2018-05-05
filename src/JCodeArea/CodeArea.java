@@ -1,6 +1,7 @@
 package JCodeArea;
 
 import javax.swing.*;
+import java.awt.*;
 
 class CodeArea extends JTextPane
 {
@@ -21,8 +22,13 @@ class CodeArea extends JTextPane
         setFont(theme.getCodeAreaFont());
         setBackground(theme.getCodeAreaBackground());
         setForeground(theme.getCodeAreaForeground());
-        caret.setColor(theme.getCaretColor());
-        //setCaretColor(theme.getCaretColor());
+        setCaretColor(theme.getCaretColor());
+    }
+
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
     }
 
     int getLineCount()
