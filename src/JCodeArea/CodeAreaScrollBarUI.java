@@ -4,27 +4,32 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 
-public class CodeAreaScrollBarUI extends BasicScrollBarUI
+class CodeAreaScrollBarUI extends BasicScrollBarUI
 {
     private Theme theme;
 
-    public CodeAreaScrollBarUI(Theme theme)
+    CodeAreaScrollBarUI(Theme theme)
     {
         super();
+        this.theme = theme;
+    }
+
+    void setTheme(Theme theme)
+    {
         this.theme = theme;
     }
 
     @Override
     protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds)
     {
-        g.setColor(theme.getCaBackground());
+        g.setColor(theme.getCodeAreaBackground());
         g.fillRect((int)trackBounds.getX(), (int)trackBounds.getY(), (int)trackBounds.getWidth(), (int)trackBounds.getHeight());
     }
 
     @Override
     protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds)
     {
-        g.setColor(new Color(170, 170, 170));
+        g.setColor(theme.getScrollBarColor());
         g.fillRoundRect((int)thumbBounds.getX(), (int)thumbBounds.getY(), (int)thumbBounds.getWidth(), (int)thumbBounds.getHeight(), 8, 8);
     }
 

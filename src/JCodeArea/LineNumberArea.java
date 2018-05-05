@@ -3,13 +3,13 @@ package JCodeArea;
 import javax.swing.*;
 import java.awt.*;
 
-public class LineNumberArea extends JTextArea
+class LineNumberArea extends JTextArea
 {
     private int spacing;
     private Theme theme;
     private JCodeArea codeArea;
 
-    protected LineNumberArea(JCodeArea codeArea, Theme theme, int spacing)
+    LineNumberArea(JCodeArea codeArea, Theme theme, int spacing)
     {
         super(" 1");
         this.setEnabled(false);
@@ -24,24 +24,34 @@ public class LineNumberArea extends JTextArea
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(theme.getCaBackground());
+        g2d.setColor(theme.getCodeAreaBackground());
         g2d.setStroke(new BasicStroke(spacing));
         g2d.drawLine(getWidth() - spacing/2, getY(), getWidth()-spacing/2, getHeight());
         g2d.setStroke(new BasicStroke(1));
-        g2d.setColor(theme.getLnaSeparatorColor());
+        g2d.setColor(theme.getLineNumberAreaSeparator());
         g2d.drawLine(getWidth() - spacing, getY(), getWidth() - spacing, getHeight());
 
-        codeArea.numScrollPane.getVerticalScrollBar().setValue(codeArea.codeScrollPane.getVerticalScrollBar().getValue());
+        codeArea.getNumScrollPane().getVerticalScrollBar().setValue(codeArea.getCodeScrollPane().getVerticalScrollBar().getValue());
 
         repaint();
     }
 
-    public int getSpacing()
+    void setTheme(Theme theme)
+    {
+        this.theme = theme;
+        setFont(theme.getLineNumberAreaFont());
+        setBackground(theme.getLineNumberAreaBackground());
+        setForeground(theme.getLineNumberAreaForeground());
+    }
+
+    @SuppressWarnings("unused")
+    int getSpacing()
     {
         return this.spacing;
     }
 
-    public void setSpacing(int spacing)
+    @SuppressWarnings("unused")
+    void setSpacing(int spacing)
     {
         this.spacing = spacing;
     }

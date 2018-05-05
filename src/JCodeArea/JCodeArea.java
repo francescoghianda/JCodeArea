@@ -8,8 +8,8 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
 {
 
     private JPanel numPane;
-    protected JScrollPane codeScrollPane;
-    protected JScrollPane numScrollPane;
+    private JScrollPane codeScrollPane;
+    private JScrollPane numScrollPane;
     private LineNumberArea numArea;
     private CodeArea codeArea;
 
@@ -19,26 +19,32 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
 
     private Theme theme;
 
+    private CodeAreaScrollBarUI verticalScrollBarUI;
+    private CodeAreaScrollBarUI horizontalScrollBarUI;
+
     public JCodeArea(Theme theme)
     {
         setBorder(null);
         setLayout(new BorderLayout());
-        setBackground(Color.MAGENTA);
+        //setBackground(Color.MAGENTA);
+
+        verticalScrollBarUI = new CodeAreaScrollBarUI(theme);
+        horizontalScrollBarUI = new CodeAreaScrollBarUI(theme);
 
         numScrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         numScrollPane.setBorder(null);
 
         codeScrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         codeScrollPane.setBorder(null);
-        codeScrollPane.setBackground(theme.getCaBackground());
+        codeScrollPane.setBackground(theme.getCodeAreaBackground());
         codeScrollPane.getVerticalScrollBar().addAdjustmentListener(this);
-        codeScrollPane.getHorizontalScrollBar().setUI(new CodeAreaScrollBarUI(theme));
-        codeScrollPane.getVerticalScrollBar().setUI(new CodeAreaScrollBarUI(theme));
+        codeScrollPane.getHorizontalScrollBar().setUI(horizontalScrollBarUI);
+        codeScrollPane.getVerticalScrollBar().setUI(verticalScrollBarUI);
         codeScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(10, getHeight()));
         codeScrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(getWidth(), 10));
 
         codeArea = new CodeArea();
-        codeArea.setBackground(Color.GRAY);
+        //codeArea.setBackground(Color.GRAY);
         codeArea.addKeyListener(this);
         codeScrollPane.setViewportView(codeArea);
 
@@ -47,10 +53,9 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         numPane = new JPanel();
         numPane.setBorder(null);
         numPane.setLayout(new BorderLayout());
-        numPane.setBackground(Color.GREEN);
+        //numPane.setBackground(Color.GREEN);
         numScrollPane.setViewportView(numArea);
         numPane.add(numScrollPane, BorderLayout.CENTER);
-
 
         add(codeScrollPane, BorderLayout.CENTER);
         add(numPane, BorderLayout.WEST);
@@ -76,16 +81,15 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         numPane.setPreferredSize(new Dimension(numberColumnWidth, (int)size.getHeight()));
     }
 
+
     public void setTheme(Theme theme)
     {
         this.theme = theme;
-        codeArea.setFont(theme.getCaFont());
-        codeArea.setBackground(theme.getCaBackground());
-        codeArea.setForeground(theme.getCaForeground());
-        codeArea.setCaretColor(theme.getCaForeground());
-        numArea.setFont(theme.getLnaFont());
-        numArea.setBackground(theme.getLnaBackground());
-        numArea.setForeground(theme.getLnaForeground());
+        verticalScrollBarUI.setTheme(theme);
+        horizontalScrollBarUI.setTheme(theme);
+        codeScrollPane.setBackground(theme.getCodeAreaBackground());
+        codeArea.setTheme(theme);
+        numArea.setTheme(theme);
     }
 
 
@@ -94,11 +98,13 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         return this.theme;
     }
 
+    @SuppressWarnings("unused")
     public String getText()
     {
         return codeArea.getText();
     }
 
+    @SuppressWarnings("unused")
     public void setText(String text)
     {
         codeArea.setText(text);
@@ -108,16 +114,26 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
     private void updateNumbers()
     {
         int l;
-        String str = "";
+        StringBuilder str = new StringBuilder();
         if((l = codeArea.getLineCount()) != lines)
         {
             lines = l;
             for(int i = 0; i < l; i++)
             {
-                str += " "+String.valueOf(i+1)+"\n";
+                str.append(" ").append(String.valueOf(i + 1)).append("\n");
             }
-            numArea.setText(str);
+            numArea.setText(str.toString());
         }
+    }
+
+    JScrollPane getCodeScrollPane()
+    {
+        return this.codeScrollPane;
+    }
+
+    JScrollPane getNumScrollPane()
+    {
+        return this.numScrollPane;
     }
 
     @Override

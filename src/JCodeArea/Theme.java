@@ -4,96 +4,165 @@ import java.awt.*;
 
 public class Theme
 {
-    public static final Theme DARK_THEME = new Theme(new Color(43, 43, 43), new Color(180, 180, 180), new Color(49, 51, 53), new Color(96, 96, 96), new Color(85, 85, 85), new Font("Menlo", Font.PLAIN, 20), "Menlo");
+    public static final Theme DARK_THEME = new Theme(
+            new Color(43, 43, 43),
+            new Color(180, 180, 180),
+            new Color(49, 51, 53),
+            new Color(96, 96, 96),
+            new Color(85, 85, 85),
+            new Color(170, 170, 170),
+            new Color(185, 185, 185),
+            new Font("Menlo", Font.PLAIN, 20), "Menlo");
 
-    private Color caBackground;  //codeAreaBackground
-    private Color caForeground;  //codeAreaForeground
-    private Color lnaBackground; //lineNumberAreaBackground
-    private Color lnaForeground; //lineNumberAreaForeground
-    private Color lnaSeparatorColor; //lineNumberAreaSeparator
+    public static final Theme LIGHT_THEME = new Theme(
+            new Color(255, 255, 255),
+            new Color(0, 0, 0),
+            new Color(240, 240, 240),
+            new Color(153, 153, 153),
+            new Color(208, 208, 208),
+            new Color(173, 173, 173),
+            new Color(10, 10, 10),
+            new Font("Menlo", Font.PLAIN, 20), "Menlo");
 
-    private Font caFont;
-    private Font lnaFont;
+    public static final Theme BLUE_THEME = new Theme(
+            new Color(40, 44, 52),
+            new Color(136, 146, 162),
+            new Color(35, 39, 47),
+            new Color(119, 125, 136),
+            new Color(86, 138, 242),
+            new Color(60, 66, 78),
+            new Color(86, 138, 242),
+            new Font("Menlo", Font.PLAIN, 20), "Menlo");
 
-    public Theme(Color caBackground, Color caForeground, Color lnaBackground, Color lnaForeground, Color lnaSeparatorColor, Font caFont, String lnaFont)
+
+    private Color codeAreaBackground;  //codeAreaBackground
+    private Color codeAreaForeground;  //codeAreaForeground
+    private Color lineNumberAreaBackground; //lineNumberAreaBackground
+    private Color lineNumberAreaForeground; //lineNumberAreaForeground
+    private Color lineNumberAreaSeparator; //lineNumberAreaSeparator
+    private Color scrollBarColor;
+    private Color caretColor;
+
+    private Font codeAreaFont;
+    private Font lineNumberAreaFont;
+
+    public Theme(Color codeAreaBackground,
+                 Color codeAreaForeground,
+                 Color lineNumberAreaBackground,
+                 Color lineNumberAreaForeground,
+                 Color lineNumberAreaSeparator,
+                 Color scrollBarColor,
+                 Color caretColor,
+                 Font codeAreaFont, String lineNumberAreaFont)
     {
-        this.caBackground = caBackground;
-        this.caForeground = caForeground;
-        this.lnaBackground = lnaBackground;
-        this.lnaForeground = lnaForeground;
-        this.lnaSeparatorColor = lnaSeparatorColor;
+        this.codeAreaBackground = codeAreaBackground;
+        this.codeAreaForeground = codeAreaForeground;
+        this.lineNumberAreaBackground = lineNumberAreaBackground;
+        this.lineNumberAreaForeground = lineNumberAreaForeground;
+        this.lineNumberAreaSeparator = lineNumberAreaSeparator;
+        this.scrollBarColor = scrollBarColor;
+        this.caretColor = caretColor;
 
-        this.caFont = caFont;
-        this.lnaFont = new Font(lnaFont, Font.PLAIN, caFont.getSize());
+        this.codeAreaFont = codeAreaFont;
+        this.lineNumberAreaFont = new Font(lineNumberAreaFont, Font.PLAIN, codeAreaFont.getSize());
     }
 
-    public Color getCaBackground()
+    public Color getCodeAreaBackground()
     {
-        return caBackground;
+        return codeAreaBackground;
     }
 
-    public void setCaBackground(Color caBackground)
+    @SuppressWarnings("unused")
+    public void setCodeAreaBackground(Color codeAreaBackground)
     {
-        this.caBackground = caBackground;
+        this.codeAreaBackground = codeAreaBackground;
     }
 
-    public Color getCaForeground()
+    public Color getCodeAreaForeground()
     {
-        return caForeground;
+        return codeAreaForeground;
     }
 
-    public void setCaForeground(Color caForeground)
+    @SuppressWarnings("unused")
+    public void setCodeAreaForeground(Color codeAreaForeground)
     {
-        this.caForeground = caForeground;
+        this.codeAreaForeground = codeAreaForeground;
     }
 
-    public Color getLnaBackground()
+    public Color getLineNumberAreaBackground()
     {
-        return lnaBackground;
+        return lineNumberAreaBackground;
     }
 
-    public void setLnaBackground(Color lnaBackground)
+    @SuppressWarnings("unused")
+    public void setLineNumberAreaBackground(Color lineNumberAreaBackground)
     {
-        this.lnaBackground = lnaBackground;
+        this.lineNumberAreaBackground = lineNumberAreaBackground;
     }
 
-    public Color getLnaForeground()
+    public Color getLineNumberAreaForeground()
     {
-        return lnaForeground;
+        return lineNumberAreaForeground;
     }
 
-    public void setLnaForeground(Color lnaForeground)
+    @SuppressWarnings("unused")
+    public void setLineNumberAreaForeground(Color lineNumberAreaForeground)
     {
-        this.lnaForeground = lnaForeground;
+        this.lineNumberAreaForeground = lineNumberAreaForeground;
     }
 
-    public Color getLnaSeparatorColor()
+    public Color getLineNumberAreaSeparator()
     {
-        return lnaSeparatorColor;
+        return lineNumberAreaSeparator;
     }
 
-    public void setLnaSeparatorColor(Color lnaSeparatorColor)
+    @SuppressWarnings("unused")
+    public void setLineNumberAreaSeparator(Color lineNumberAreaSeparator)
     {
-        this.lnaSeparatorColor = lnaSeparatorColor;
+        this.lineNumberAreaSeparator = lineNumberAreaSeparator;
     }
 
-    public Font getCaFont()
+    public Color getScrollBarColor()
     {
-        return caFont;
+        return scrollBarColor;
     }
 
-    public void setCaFont(Font caFont)
+    @SuppressWarnings("unused")
+    public void setScrollBarColor(Color scrollBarColor)
     {
-        this.caFont = caFont;
+        this.scrollBarColor = scrollBarColor;
     }
 
-    public Font getLnaFont()
+    public Color getCaretColor()
     {
-        return lnaFont;
+        return caretColor;
     }
 
-    public void setLnaFont(String lnaFont)
+    @SuppressWarnings("unused")
+    public void setCaretColor(Color caretColor)
     {
-        this.lnaFont = new Font(lnaFont, Font.PLAIN, caFont.getSize());
+        this.caretColor = caretColor;
+    }
+
+    public Font getCodeAreaFont()
+    {
+        return codeAreaFont;
+    }
+
+    @SuppressWarnings("unused")
+    public void setCodeAreaFont(Font codeAreaFont)
+    {
+        this.codeAreaFont = codeAreaFont;
+    }
+
+    public Font getLineNumberAreaFont()
+    {
+        return lineNumberAreaFont;
+    }
+
+    @SuppressWarnings("unused")
+    public void setLineNumberAreaFont(String lineNumberAreaFont)
+    {
+        this.lineNumberAreaFont = new Font(lineNumberAreaFont, Font.PLAIN, codeAreaFont.getSize());
     }
 }

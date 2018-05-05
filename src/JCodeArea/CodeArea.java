@@ -2,15 +2,30 @@ package JCodeArea;
 
 import javax.swing.*;
 
-public class CodeArea extends JTextPane
+class CodeArea extends JTextPane
 {
 
-    public CodeArea()
+    private Theme theme;
+    private CodeAreaCaret caret;
+
+    CodeArea()
     {
         super();
+        caret = new CodeAreaCaret(2);
+        setCaret(caret);
     }
 
-    protected int getLineCount()
+    void setTheme(Theme theme)
+    {
+        this.theme = theme;
+        setFont(theme.getCodeAreaFont());
+        setBackground(theme.getCodeAreaBackground());
+        setForeground(theme.getCodeAreaForeground());
+        caret.setColor(theme.getCaretColor());
+        //setCaretColor(theme.getCaretColor());
+    }
+
+    int getLineCount()
     {
         return getText().replaceAll("\n", "\n ").split("\n").length;
     }
