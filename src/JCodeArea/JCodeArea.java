@@ -24,6 +24,9 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
 
     private boolean autoBrackets;
 
+    private char deletedChar;
+    private int tabs;
+
     public JCodeArea(Theme theme)
     {
         setBorder(null);
@@ -190,19 +193,31 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         return str;
     }
 
-    private char deletedChar;
+
 
     @Override
     public void keyTyped(KeyEvent e)
     {
         updateNumbers();
 
+        char ch = e.getKeyChar();
+        String text = codeArea.getText();
+        int pos = codeArea.getCaretPosition();
+
+        if(ch == '\t')tabs++;
+
+        /*if(ch == '\n' && tabs > 0)
+        {
+            StringBuilder str = new StringBuilder();
+            for(int i = 0; i < tabs; i++)
+            {
+                str.append('\t');
+            }
+            codeArea.setText(text.substring(0, pos).concat(str.toString()).concat(text.substring(pos)));
+        }*/
+
         if(autoBrackets)
         {
-            String text = codeArea.getText();
-            int pos = codeArea.getCaretPosition();
-            char ch = e.getKeyChar();
-
             if(isOpenBracket(ch))
             {
                 codeArea.setText(text.substring(0, pos).concat(createBrackets(ch)).concat(text.substring(pos)));
@@ -226,7 +241,11 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
     public void keyPressed(KeyEvent e)
     {
         int pos = codeArea.getCaretPosition();
-        if(e.getKeyChar() == '\b' && pos > 0) deletedChar = codeArea.getText().substring(pos-1, pos).charAt(0);
+        if(e.getKeyChar() == '\b' && pos > 0)
+        {
+            deletedChar = codeArea.getText().substring(pos-1, pos).charAt(0);
+            if(deletedChar == '\t')tabs--;
+        }
     }
 
     @Override
