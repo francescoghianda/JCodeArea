@@ -1,5 +1,7 @@
 package JCodeArea;
 
+import javafx.scene.input.KeyCode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -21,6 +23,8 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
 
     private CodeAreaScrollBarUI verticalScrollBarUI;
     private CodeAreaScrollBarUI horizontalScrollBarUI;
+
+    private boolean autoBrackets;
 
     public JCodeArea(Theme theme)
     {
@@ -63,6 +67,8 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         setTheme(theme);
 
         lines = 1;
+
+        autoBrackets = true;
     }
 
     @Override
@@ -153,6 +159,48 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
     public void keyTyped(KeyEvent e)
     {
         updateNumbers();
+
+        if(autoBrackets)
+        {
+            int pos = codeArea.getCaretPosition();
+            char bracket = e.getKeyChar();
+            String str = "";
+            boolean isBracket = false;
+
+            switch(bracket)
+            {
+                case '(':
+                    str = "()";
+                    isBracket = true;
+                    break;
+                case '[':
+                    str = "[]";
+                    isBracket = true;
+                    break;
+                case '{':
+                    str = "{}";
+                    isBracket = true;
+                    break;
+                case '"':
+                    str = "\"\"";
+                    isBracket = true;
+                    break;
+                case '\'':
+                    str = "''";
+                    isBracket = true;
+                    break;
+            }
+
+            if(isBracket)
+            {
+                codeArea.setText(codeArea.getText().substring(0, pos).concat(str).concat(codeArea.getText().substring(pos)));
+                codeArea.setCaretPosition(pos+1); //in mezzo alle parentesi
+                e.consume();
+            }
+            //TODO
+            // AGGIUNGERE CANCELLAZIONE !!!
+
+        }
     }
 
     @Override

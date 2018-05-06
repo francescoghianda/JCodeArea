@@ -42,6 +42,7 @@ class LineNumberArea extends JTextArea
         setFont(theme.getLineNumberAreaFont());
         setBackground(theme.getLineNumberAreaBackground());
         setForeground(theme.getLineNumberAreaForeground());
+        //setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
     }
 
     @SuppressWarnings("unused")
