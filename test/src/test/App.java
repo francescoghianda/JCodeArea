@@ -27,6 +27,7 @@ public class App extends JFrame
         codeArea.setLocation(100, 20);
         codeArea.setSize(new Dimension(1000, 600));
         codeArea.setPreferredSize(new Dimension(600, 400));
+        codeArea.enableAutoBrackets(true);
 
         darkBtn = new JButton("dark");
         darkBtn.setSize(50, 20);

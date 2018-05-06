@@ -1,7 +1,5 @@
 package JCodeArea;
 
-import javafx.scene.input.KeyCode;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -67,8 +65,11 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         setTheme(theme);
 
         lines = 1;
+    }
 
-        autoBrackets = true;
+    public void enableAutoBrackets(boolean autoBrackets)
+    {
+        this.autoBrackets = autoBrackets;
     }
 
     @Override
@@ -155,6 +156,42 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
         numScrollPane.getVerticalScrollBar().setValue(codeScrollPane.getVerticalScrollBar().getValue());
     }
 
+    private boolean isOpenBracket(char ch)
+    {
+        return (ch == '(' || ch == '[' || ch == '{' || ch == '"' || ch == '\'');
+    }
+
+    private boolean isCloseBracket(char ch)
+    {
+        return (ch == ')' || ch == ']' || ch == '}' || ch == '"' || ch == '\'');
+    }
+
+    private String createBrackets(char ch)
+    {
+        String str = "";
+        switch(ch)
+        {
+            case '(':
+                str = "()";
+                break;
+            case '[':
+                str = "[]";
+                break;
+            case '{':
+                str = "{}";
+                break;
+            case '"':
+                str = "\"\"";
+                break;
+            case '\'':
+                str = "''";
+                break;
+        }
+        return str;
+    }
+
+    private char deletedChar;
+
     @Override
     public void keyTyped(KeyEvent e)
     {
@@ -162,51 +199,34 @@ public class JCodeArea extends JPanel implements AdjustmentListener, KeyListener
 
         if(autoBrackets)
         {
+            String text = codeArea.getText();
             int pos = codeArea.getCaretPosition();
-            char bracket = e.getKeyChar();
-            String str = "";
-            boolean isBracket = false;
+            char ch = e.getKeyChar();
 
-            switch(bracket)
+            if(isOpenBracket(ch))
             {
-                case '(':
-                    str = "()";
-                    isBracket = true;
-                    break;
-                case '[':
-                    str = "[]";
-                    isBracket = true;
-                    break;
-                case '{':
-                    str = "{}";
-                    isBracket = true;
-                    break;
-                case '"':
-                    str = "\"\"";
-                    isBracket = true;
-                    break;
-                case '\'':
-                    str = "''";
-                    isBracket = true;
-                    break;
-            }
-
-            if(isBracket)
-            {
-                codeArea.setText(codeArea.getText().substring(0, pos).concat(str).concat(codeArea.getText().substring(pos)));
+                codeArea.setText(text.substring(0, pos).concat(createBrackets(ch)).concat(text.substring(pos)));
                 codeArea.setCaretPosition(pos+1); //in mezzo alle parentesi
                 e.consume();
             }
-            //TODO
-            // AGGIUNGERE CANCELLAZIONE !!!
-
+            else if(ch == '\b' && pos != text.length() && isOpenBracket(deletedChar)) //BACK_SPACE cancella la parentesi chiusa se presente
+            {
+                String previousChar = text.substring(pos, pos+1);
+                if(isCloseBracket(previousChar.charAt(0)))
+                {
+                    codeArea.setText(text.substring(0, pos).concat(text.substring(pos+1)));
+                    codeArea.setCaretPosition(pos);
+                    e.consume();
+                }
+            }
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e)
     {
-
+        int pos = codeArea.getCaretPosition();
+        if(e.getKeyChar() == '\b' && pos > 0) deletedChar = codeArea.getText().substring(pos-1, pos).charAt(0);
     }
 
     @Override
